@@ -10,7 +10,7 @@ import api from '../../services/api';
 import {useCart, PokemonProps} from '../../hooks/cart.provider';
 import { handleUpperCaseFirstCaracter, returnPrice } from '../../helper';
 
-import {PokemonResponseModel, firePokemonsModel} from '../../shared/models/pokemon';
+import {PokemonResponseModel, ghostPokemonsModel} from '../../shared/models/pokemon';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { arrayMoveImmutable } from 'array-move';
@@ -24,10 +24,10 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const inicio = async () => {
-            const allUrlPokemons = await api.get('type/water')
+            const allUrlPokemons = await api.get('type/ghost')
            
-            allUrlPokemons.data.pokemon.map(async (firePokemon: firePokemonsModel) => {               
-                await api.get(`https://pokeapi.co/api/v2/pokemon/${firePokemon.pokemon.name}`)
+            allUrlPokemons.data.pokemon.map(async (ghostPokemon: ghostPokemonsModel) => {               
+                await api.get(`https://pokeapi.co/api/v2/pokemon/${ghostPokemon.pokemon.name}`)
                 .then(pokemon => {
                     const image = pokemon.data.sprites.other.dream_world.front_default 
                         ? pokemon.data.sprites.other.dream_world.front_default 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
                         id: pokemon.data.id,
                         name: pokemon.data.name,
                         weight: pokemon.data.height,
-                        attribute: 'Fire',
+                        attribute: 'Ghost',
                         status: pokemon.data.stats, 
                         image,
                         base_experience: pokemon.data.base_experience,
